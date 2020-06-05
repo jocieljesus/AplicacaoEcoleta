@@ -1,0 +1,27 @@
+
+ // Get: Buscar uma ou mais informações.
+ // Post: Criar uma nova informação.
+ //Put: Atualizar uma informação.
+ //Delete: Remover uma informação.
+
+ //Request param : Vem na propria rota identifica um recurso (obrigatorio)
+ //Query param : Parametros que vem na  propria rota geralmente opcionais.
+ //Request Body : Paramentros para criação/atualização.
+
+ //Select * from users Where name= 'Diego'
+ // knex('users).where('name', 'Diego').select('*')
+  
+// Migrations: Historico do banco de dados
+// 
+
+const parsedItems = String(items)
+        .split(',')
+        .map(item => Number( item.trim()));
+        
+ const points = await knex('points')
+        .join('point_items', 'points.id', '=', 'point_items.point_id')
+        .whereIn('point_items.item_id', parsedItems)
+        .where('cidade', String(cidade))
+        .where('uf', String(uf))
+        .distinct()
+        .select('points.*');
